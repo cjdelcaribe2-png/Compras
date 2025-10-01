@@ -2,58 +2,60 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Hace la página responsive -->
   <title>Lista de Mercado</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gradient-to-r from-green-100 to-green-200 min-h-screen p-6 flex flex-col items-center">
+<body class="bg-gradient-to-r from-green-100 to-green-200 min-h-screen p-4 flex flex-col items-center">
 
-  <h1 class="text-3xl font-bold text-center mb-6 text-green-800">🛒 Mi Lista de Mercado</h1>
+  <h1 class="text-2xl sm:text-3xl font-bold text-center mb-6 text-green-800">🛒 Mi Lista de Mercado</h1>
 
   <!-- Formulario para añadir productos -->
   <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md mb-8">
-    <h2 class="text-xl font-semibold mb-4 text-green-700">Agregar Producto</h2>
+    <h2 class="text-lg sm:text-xl font-semibold mb-4 text-green-700">Agregar Producto</h2>
 
     <!-- Select de productos -->
     <label class="block mb-2 text-sm text-gray-600">Selecciona un producto:</label>
-    <select id="productoSelect" class="border rounded-lg p-2 w-full mb-3">
+    <select id="productoSelect" class="border rounded-lg p-2 w-full mb-3 text-sm">
       <option value="">-- Selecciona un producto --</option>
     </select>
 
     <!-- O escribir uno nuevo -->
     <label class="block mb-2 text-sm text-gray-600">O escribe un nuevo producto:</label>
-    <input type="text" id="nuevoProducto" placeholder="Ej: Tomate" class="border rounded-lg p-2 w-full mb-3">
+    <input type="text" id="nuevoProducto" placeholder="Ej: Tomate" class="border rounded-lg p-2 w-full mb-3 text-sm">
 
     <!-- Precio -->
     <label class="block mb-2 text-sm text-gray-600">Precio (COP):</label>
-    <input type="number" id="precio" class="border rounded-lg p-2 w-full mb-3">
+    <input type="number" id="precio" class="border rounded-lg p-2 w-full mb-3 text-sm">
 
     <!-- Cantidad -->
     <label class="block mb-2 text-sm text-gray-600">Cantidad:</label>
-    <input type="number" id="cantidad" value="1" min="1" class="border rounded-lg p-2 w-full mb-4">
+    <input type="number" id="cantidad" value="1" min="1" class="border rounded-lg p-2 w-full mb-4 text-sm">
 
     <!-- Botón -->
-    <button onclick="agregarAlCarrito()" class="bg-green-500 hover:bg-green-600 text-white py-2 w-full rounded-lg">
+    <button onclick="agregarAlCarrito()" class="bg-green-500 hover:bg-green-600 text-white py-2 w-full rounded-lg text-sm">
       ➕ Añadir al carrito
     </button>
   </div>
 
   <!-- Carrito -->
   <div class="bg-white p-6 rounded-2xl shadow-lg max-w-4xl w-full">
-    <h2 class="text-2xl font-semibold mb-4 text-green-700">🧾 Carrito</h2>
+    <h2 class="text-xl sm:text-2xl font-semibold mb-4 text-green-700">🧾 Carrito</h2>
     <div class="overflow-x-auto">
-      <table class="w-full border-collapse text-sm sm:text-base">
+      <table class="w-full border-collapse text-xs sm:text-sm md:text-base">
         <thead>
           <tr class="bg-green-100">
             <th class="p-2 text-left">Producto</th>
             <th class="p-2 text-center">Cantidad</th>
             <th class="p-2 text-center">Precio Unitario</th>
             <th class="p-2 text-center">Subtotal</th>
+            <th class="p-2 text-center">Acción</th>
           </tr>
         </thead>
         <tbody id="carrito"></tbody>
         <tfoot>
           <tr class="bg-green-200 font-bold">
-            <td colspan="3" class="p-2 text-right">Total:</td>
+            <td colspan="4" class="p-2 text-right">Total:</td>
             <td id="total" class="p-2 text-center">0</td>
           </tr>
         </tfoot>
@@ -63,46 +65,16 @@
 
   <script>
     const productosData = [
-      ["TOALLA PARA COCINA",1950],
-      ["SERVILLETA",3900],
-      ["JABON",5350],
-      ["SESTA PAPA",5800],
-      ["TOCINETA",6600],
-      ["SALCHICHA",6400],
-      ["ESPUMA DE AFEITAR",6550],
-      ["BOLSA ECOLOGICA",1200],
-      ["QUESO PARMESANO",6950],
-      ["PULPA DE CERDO",11990],
-      ["QUESO MOZZARELLA",9900],
-      ["JAMON DE CERDO",8700],
-      ["BANDEJA PECHUGA",17300],
-      ["CHORIZO",4990],
-      ["CHICHARRON",7950],
-      ["CARNE MOLIDA",12900],
-      ["YOGURT",3990],
-      ["HUEVO",6490],
-      ["GASEOSA",4600],
-      ["BRETAÑA",2200],
-      ["BONGURT",4100],
-      ["LECHE ENTERA",3350],
-      ["MANZANA",10200],
-      ["PERA",10750],
-      ["FINAS HIERVAS",1990],
-      ["AZUCAR",3750],
-      ["AJO",950],
-      ["ARROZ",8190],
-      ["SPAGUETTI",3990],
-      ["ACEITE",22850],
-      ["PAPEL HIGIENICO",13950],
-      ["COLORANTE",2100],
-      ["MEZCLA",2650],
-      ["AJO GRANULADO",1990],
-      ["SHAMPOO",7990],
-      ["HARINA",2600],
-      ["GALLETAS",8500],
-      ["BOLSA HOGAR",1900],
-      ["BETUN",2990],
-      ["ESPIRAL BRILLO",1900],
+      ["TOALLA PARA COCINA",1950],["SERVILLETA",3900],["JABON",5350],["SESTA PAPA",5800],
+      ["TOCINETA",6600],["SALCHICHA",6400],["ESPUMA DE AFEITAR",6550],["BOLSA ECOLOGICA",1200],
+      ["QUESO PARMESANO",6950],["PULPA DE CERDO",11990],["QUESO MOZZARELLA",9900],["JAMON DE CERDO",8700],
+      ["BANDEJA PECHUGA",17300],["CHORIZO",4990],["CHICHARRON",7950],["CARNE MOLIDA",12900],
+      ["YOGURT",3990],["HUEVO",6490],["GASEOSA",4600],["BRETAÑA",2200],["BONGURT",4100],
+      ["LECHE ENTERA",3350],["MANZANA",10200],["PERA",10750],["FINAS HIERVAS",1990],
+      ["AZUCAR",3750],["AJO",950],["ARROZ",8190],["SPAGUETTI",3990],["ACEITE",22850],
+      ["PAPEL HIGIENICO",13950],["COLORANTE",2100],["MEZCLA",2650],["AJO GRANULADO",1990],
+      ["SHAMPOO",7990],["HARINA",2600],["GALLETAS",8500],["BOLSA HOGAR",1900],
+      ["BETUN",2990],["ESPIRAL BRILLO",1900],
     ];
 
     const select = document.getElementById("productoSelect");
@@ -159,6 +131,11 @@
       cantidadInput.value = 1;
     }
 
+    function eliminarDelCarrito(nombre) {
+      carrito = carrito.filter(item => item.nombre !== nombre);
+      renderCarrito();
+    }
+
     function renderCarrito() {
       carritoBody.innerHTML = "";
       let total = 0;
@@ -171,6 +148,10 @@
             <td class="p-2 text-center">${item.cantidad}</td>
             <td class="p-2 text-center">$${item.precio.toLocaleString()}</td>
             <td class="p-2 text-center">$${subtotal.toLocaleString()}</td>
+            <td class="p-2 text-center">
+              <button onclick="eliminarDelCarrito('${item.nombre}')" 
+                class="text-red-500 hover:text-red-700 font-bold">❌</button>
+            </td>
           </tr>
         `;
       });
